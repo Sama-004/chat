@@ -10,8 +10,7 @@ export default function App() {
   return (
     <>
       {session ? (
-        // <button onClick={() => signOut()}>Sign out</button>
-        redirect("/dashboard")
+        redirect("/home")
       ) : (
         <button onClick={() => signIn()}>Sign in</button>
       )}

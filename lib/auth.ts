@@ -25,40 +25,22 @@ export const authOptions = {
             email: credentials.email as string,
           },
         });
-        if (existingUser) {
-          const passwordValidation = await bcrypt.compare(
-            credentials.password,
-            existingUser.password
-          );
-          if (passwordValidation) {
-            return {
-              id: existingUser.id.toString(),
-              name: existingUser.name,
-              username: existingUser.username,
-              email: existingUser.email,
-            };
-          }
+        if (!existingUser) {
           return null;
         }
-        try {
-          const user = await prisma.user.create({
-            data: {
-              email: credentials.email as string,
-              password: hashedPassword,
-              username: "test",
-              name: "testing",
-            },
-          });
-          return {
-            id: user.id.toString(),
-            name: user.name,
-            email: user.email,
-            username: user.username,
-          };
-        } catch (err) {
-          console.error(err);
+        const passwordValidation = await bcrypt.compare(
+          credentials.password,
+          existingUser.password
+        );
+        if (!passwordValidation) {
+          return null;
         }
-        return null;
+        return {
+          id: existingUser.id.toString(),
+          name: existingUser.name,
+          username: existingUser.username,
+          email: existingUser.email,
+        };
       },
     }),
   ],
@@ -78,6 +60,7 @@ export const authOptions = {
     },
     pages: {
       signIn: "/signin",
+      signUp: "/signup",
     },
   },
 };
