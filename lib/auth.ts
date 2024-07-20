@@ -1,4 +1,5 @@
 import CredentialsProvider from "next-auth/providers/credentials";
+import GoogleProvider from "next-auth/providers/google";
 import { signIn } from "next-auth/react";
 
 export const authOptions = {
@@ -6,8 +7,16 @@ export const authOptions = {
     CredentialsProvider({
       name: "Credentials",
       credentials: {
-        username: { label: "email", type: "text", placeholder: "" },
-        password: { label: "password", type: "password", placeholder: "" },
+        username: {
+          label: "email",
+          type: "text",
+          placeholder: "email@gmail.com",
+        },
+        password: {
+          label: "password",
+          type: "password",
+          placeholder: "********",
+        },
       },
       async authorize(credentials: any) {
         return {
