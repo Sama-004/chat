@@ -1,6 +1,4 @@
 import CredentialsProvider from "next-auth/providers/credentials";
-import GoogleProvider from "next-auth/providers/google";
-import { signIn } from "next-auth/react";
 import bcrypt from "bcrypt";
 import prisma from "../db";
 

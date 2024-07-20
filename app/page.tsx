@@ -1,11 +1,20 @@
 "use client";
-import { signIn, signOut } from "next-auth/react";
+import { signIn, signOut, useSession } from "next-auth/react";
+import { redirect } from "next/navigation";
 
 export default function App() {
+  const { data: session, status } = useSession();
+  if (status === "loading") {
+    return <div>loading...</div>;
+  }
   return (
-    <div>
-      <button onClick={() => signIn()}>Signin</button>
-      <button onClick={() => signOut()}>Sign out</button>
-    </div>
+    <>
+      {session ? (
+        // <button onClick={() => signOut()}>Sign out</button>
+        redirect("/dashboard")
+      ) : (
+        <button onClick={() => signIn()}>Sign in</button>
+      )}
+    </>
   );
 }
