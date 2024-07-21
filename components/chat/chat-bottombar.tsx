@@ -8,7 +8,7 @@ import {
   ThumbsUp,
 } from "lucide-react";
 import Link from "next/link";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { buttonVariants } from "../ui/button";
 import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
@@ -31,8 +31,20 @@ export default function ChatBottombar({
   const [message, setMessage] = useState("");
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
+  const adjustTextareaHeight = () => {
+    if (inputRef.current) {
+      inputRef.current.style.height = "auto";
+      inputRef.current.style.height = inputRef.current.scrollHeight + "px";
+    }
+  };
+
+  useEffect(() => {
+    adjustTextareaHeight();
+  }, [message]);
+
   const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setMessage(event.target.value);
+    adjustTextareaHeight();
   };
 
   const handleThumbsUp = () => {
@@ -169,8 +181,11 @@ export default function ChatBottombar({
             onChange={handleInputChange}
             name="message"
             placeholder="Aa"
-            className=" w-full border rounded-full flex items-center h-9 resize-none overflow-hidden bg-background"></Textarea>
-          <div className="absolute right-2 bottom-0.5  ">
+            className=" w-full border rounded-full flex items-center h-9 resize-none overflow-hidden bg-background px-3 py-2 pr-10"
+            rows={1}
+            style={{ minHeight: "36px", maxHeight: "150px" }}></Textarea>
+          <div className="absolute right-2 bottom-0.5">
+            {/* <div className="absolute right-2 top-1/2 transform -translate-y-1/2"> */}
             <EmojiPicker
               onChange={(value) => {
                 setMessage(message + value);

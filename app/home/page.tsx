@@ -14,7 +14,7 @@ export default async function Home() {
         <div>
           <Navbar />
           {/* <div className="z-10 border rounded-lg max-w-5xl w-full h-full text-sm lg:flex"> */}
-          <div className="w-full">
+          <div className="w-full h-full lg:flex rounded-lg z-10 border text-sm max-w-10xl">
             <ChatLayout defaultLayout={defaultLayout} navCollapsedSize={8} />
           </div>
         </div>
