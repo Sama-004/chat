@@ -31,7 +31,7 @@ async function handler(req: NextRequest, res: NextResponse) {
 
     if (existingUsername) {
       return NextResponse.json(
-        { message: "Username already exists" },
+        { message: "Username already taken" },
         { status: 400 }
       );
     }

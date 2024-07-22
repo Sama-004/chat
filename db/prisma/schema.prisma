@@ -15,8 +15,20 @@ datasource db {
 
 model User{
   id Int @id @default(autoincrement())
-  username String @unique //username cannot be changed 
+  username String @unique //username cannot be changed
   email String @unique
   password String
   name String //can be changed only for displaying the name of the person on chat page
+  sentMessages Message[] @relation("SentMessages")
+  receivedMessages Message[] @relation("ReceivedMessages")
+}
+
+model Message{
+  id Int @id @default(autoincrement())
+  content String
+  createdAt DateTime @default(now())
+  senderId Int
+  sender User     @relation("SentMessages", fields: [senderId], references: [id])
+  receiverId Int
+  receiver User     @relation("ReceivedMessages", fields: [receiverId], references: [id])
 }
